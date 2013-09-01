@@ -11,11 +11,20 @@ Allows to download plugins and themes installed on your site as a zip package, r
 
 == Description ==
 
+= Features =
+* displays a 'Download' link for
+	* all installed plugins (in action links on 'Plugins' page)
+	* themes which are currently not in use (on 'Appearance' page)
+
+= Idea =
 I wrote this plugin to simplify and improve code downloading when developing on a playground with contributors. With this plugin you can get complete package with other plugin or theme you are working on in one click. You can also use it to share your code with someone without downloading it via ftp, manually zipping and then sending it in e-mail or uploading the package back to your server or anything else... just tell him to click the link!
 
 There are some other methods for this, there are advanced plugins which has such a feature to download other plugins, but I hope someone will find my code usefull as it is very simple in action and the simplest in use.
 
 This plugin uses PclZip class integrated with WordPress.
+
+= TODO =
+* add 'Download' link for currently selected theme (no hooks for this - javascript?) 
 
 == Installation ==
 
