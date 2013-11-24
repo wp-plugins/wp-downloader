@@ -3,17 +3,18 @@
  * Plugin Name: WP Downloader
  * Plugin URI: http://szalkiewicz.pl/
  * Description: This plugin allows you to download other plugins and themes installed on your site as a zip package, ready to install on another site.
- * Version: 1.0
+ * Version: 1.1
  * Author: Wojtek Szałkiewicz
  * Author URI: http://szalkiewicz.pl
  * Requires at least: 3.5
- * Tested up to: 3.6
+ * Tested up to: 3.7.1
  */
 add_action('plugins_loaded', 'wpd_load');
 
 function wpd_load(){
 	add_filter('plugin_action_links', 'wpd_plugin_action_links', 10, 2);
 	add_filter('theme_action_links', 'wpd_theme_action_links', 10, 2);
+	add_action('admin_footer', 'wpd_scripts');
 
 	if(isset($_GET['wpd']) && wp_verify_nonce($_GET['_wpnonce'], 'wpd-download')){
 		wpd_download();
@@ -32,6 +33,23 @@ function wpd_theme_action_links($links, $theme){
 	array_push($links, $settings_link); 
 
 	return $links;
+}
+
+function wpd_scripts(){
+	$screen = get_current_screen()->id;
+
+	if($screen == 'themes'){
+		$url = wp_nonce_url(admin_url('?wpd=theme&object=' . get_stylesheet()), 'wpd-download');
+		?>
+<script>
+(function($){
+	$(document).ready(function(){
+		$('#current-theme .theme-options').after('<div class="theme-options"><a href="<?php echo $url; ?>"><?php _e('Download'); ?></a></div>')
+	});
+}(jQuery))
+</script>
+		<?php
+	}
 }
 
 
